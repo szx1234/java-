@@ -127,3 +127,11 @@ class Single{
 
 监听器与回调函数：
 监听器是用来监听事件的，控件或组件可以设置监听器（setOnClickListener(   new OnClickListener(View v){回调函数});   ）监听器可以监听控件发出的事件并做出响应（响应就是调用回调函数）； 监听器的参数是控件产生事件并发送给监听器的事件的相关信息！
+
+
+
+java范型，范型可以是类也可以是集合，范型参数必须是引用类型
+范型方法中的范型参数T放在修饰符与返回类型之间
+接口也可以定义范型，类实现接口范型有两种方法
+  1:class A extends Ainterface<String>，确定了类型
+  2:class A extends Ainterface<T>, 没确定类型

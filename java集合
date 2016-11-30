@@ -1,0 +1,26 @@
+java集合
+
+    Collection(单列集合)
+        List（有序，可重复）
+              ArrayList：
+                          底层数据结构式数组，查询快，增删慢，线程不安全，效率高
+              LinkedList：
+                          底层数据结构是数组，查询慢，增删快，线程不安全，效率稿
+              Vector：
+                          底层数据结构是数组，查询快，增删慢，线程安全（Vector中的方法都用synchronized修饰），效率低
+        set（无序，唯一）
+              HashSet：
+                          底层数据结构是hash表
+                          哈希表依赖两个方法，hashcode（），equals（）
+                          调用add时执行顺序：
+                                          首先判断hashcode（）值是否相同
+                                            是：执行equals（）看返回值
+                                              返回值是true，说明元素重复，不添加
+                                              返回false，添加到集合
+                                            否：直接添加到集合
+                                          为了保持唯一性必须重写hashcode（）和equals（）（可自动生成）
+              TreeSet:
+                          底层数据结构是平衡二叉树
+                            有两种方法保持唯一性
+                            1：让元素所属类实现Comparable
+                            2: 让TreeSet构造器接收一个Comparable实现类对象
