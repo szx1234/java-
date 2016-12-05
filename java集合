@@ -1,5 +1,5 @@
 java集合
-
+课堂知识
     Collection(单列集合)
         List（有序，可重复）
               ArrayList：
@@ -19,8 +19,91 @@ java集合
                                               返回false，添加到集合
                                             否：直接添加到集合
                                           为了保持唯一性必须重写hashcode（）和equals（）（可自动生成）
-              TreeSet:
+          TreeSet:
                           底层数据结构是平衡二叉树
                             有两种方法保持唯一性
                             1：让元素所属类实现Comparable
                             2: 让TreeSet构造器接收一个Comparable实现类对象
+      Map(双列集合)
+          HashMap（无序，键唯一）
+                            底层数据结构hash表实现Map 接口，线程不安全
+          TreeMap（有序，键唯一）
+                            底层数据结构平衡二叉树实现Map接口，实现sortedMap接口
+
+
+看core Java
+
+1:将接口的实现与现实分离
+    随时可以换子类的种类，而不需要改变下面的代码
+2:java中的集合接口与迭代器接口
+    public interface Collection<E>
+    {
+      boolean add(E element);
+      Iterator<E> iterator();
+      ...
+    }
+
+    public interface Iterator<E>
+    {
+      E next();   ／／返回掠过了元素
+      boolean hasNext();
+      void remove();   //使用之前必须调用过next（）；删除的是最后一个被访问的（掠过的）元素
+    }
+
+  //for each循环底层是用迭代器实现的
+  //所以标准类库中的所有集合都可以使用foreach循环
+
+  3:具体的集合
+  4:链表
+      java中链表都是双向的
+      链表与范型集合有个重要的区别，链表是一个有序集合，LinkedList.add();方法将对象添加到链表的尾部。但是元素常常需要
+      添加到链表的中间，由于迭代器是描述集合中的位置的，所以在LinkedList中使用迭代器给LinkedList添加有序的元素是很好的，
+      但是不能直接在Iterator中直接写add方法，Iterator是面向所有Collection的而有的Collection不需要有序的添加，比如Set
+      所以集合类库提供了一个ListIterator接口，接口中有个add方法。
+      LinkedList中有一个listIterator方法返回ListIterator接口的实现类的实例；
+          例：List<String> staff = new LinkedList<>();
+             staff.add("Tom");
+             staff.add("Bob");
+             ListIterator<String> iter = staff.listIterator();
+             iter.next();
+             iter.add("Juliet");
+
+        interface ListIterator<E> extents Iterator<E>
+        {
+          void add(E element);
+          E previous();
+          boolean hasPrevious();
+          void set(E element);
+          int nextIndex();
+          int previousIndex();
+          ...
+        }
+
+    数组列表：
+    List接口描述了一个有序的集合，并且集合中的元素的位置十分重要，List子类有两种访问元素的协议，一种是用迭代器，另一种是get和set方法
+    但是后者并不适用于链表（LinkedList）， 但是对数组却很有用（ArrayList和Vector）
+
+    Set：值唯一
+      HashSet：底层是Hash表，所装在的类必须重写了HashCode（）；和equals方法，HashSet通过计算Hash值和equals保证集合的唯一性，两个函数必须兼容
+      ，HashSet的查找的效率很高，但数据没有顺序
+
+      TreeMap：底层是平衡二叉树，所装载的类必须要实现 comparable接口并重写compareTo方法。 建TreeMap树的时候传入compartor接口的
+      实现类。  这两个方法之一。
+
+
+    优先队列：PriorityQueue
+      底层是Hedp堆
+      优先队列的元素可以按照任意的顺序插入，但是每此remove出来的总是最大或最小的元素（这个要根据你插入的元素的所属类的comparble接口的compareTo方法）
+      同TreeMap一样也可以给PriorityQueue传入compartor实现类的参数
+
+    Map：HashMap和TreeMap，如果不需要按照排列顺序访问键，最好选择散列
+      HashMap：散列映射表对 ***键*** 进行散列（所以键的类中必须要有hashCode（）方法）
+      TreeMap：树映射表对 ***键*** 的整体顺序进行排列，所以需要键对应的类需要实现comparable接口
+
+      要检索一个对象，必须提供一个键    map.get（key）,如果没有此键返回null
+      put方法加入键值对，如果加入的是已经存在的键，则覆盖
+
+    3个视图
+    1：Set<K> keySet();返回键的set
+    2: Collection values();返回值的集合
+    3: Set<Map.Entry<k, V>> entrySet();返回Map类型的Set    Map是map键值对
